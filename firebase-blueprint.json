@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "users": {
+      "title": "User",
+      "description": "Thông tin người dùng hệ thống",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "categories": {
+      "title": "Category",
+      "description": "Thể loại truyện",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["name", "slug"]
+    },
+    "stories": {
+      "title": "Story",
+      "description": "Thông tin truyện (Truyện tranh hoặc Tiểu thuyết)",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "author": { "type": "string" },
+        "description": { "type": "string" },
+        "coverImage": { "type": "string" },
+        "type": { "type": "string", "enum": ["comic", "novel"] },
+        "status": { "type": "string", "enum": ["ongoing", "completed"] },
+        "viewCount": { "type": "number" },
+        "followerCount": { "type": "number" },
+        "categoryIds": { "type": "array", "items": { "type": "string" } },
+        "lastChapterTitle": { "type": "string" },
+        "lastChapterId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "type", "status"]
+    },
+    "chapters": {
+      "title": "Chapter",
+      "description": "Chương của truyện",
+      "type": "object",
+      "properties": {
+        "storyId": { "type": "string" },
+        "title": { "type": "string" },
+        "chapterNumber": { "type": "number" },
+        "content": { "type": "string", "description": "Nội dung text cho tiểu thuyết" },
+        "images": { "type": "array", "items": { "type": "string" }, "description": "Danh sách URL ảnh cho truyện tranh" },
+        "viewCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["storyId", "title", "chapterNumber"]
+    },
+    "comments": {
+      "title": "Comment",
+      "description": "Bình luận của người dùng",
+      "type": "object",
+      "properties": {
+        "storyId": { "type": "string" },
+        "chapterId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userPhoto": { "type": "string" },
+        "content": { "type": "string" },
+        "likeCount": { "type": "number" },
+        "parentId": { "type": "string", "description": "ID của bình luận cha nếu là reply" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["storyId", "userId", "content"]
+    },
+    "follows": {
+      "title": "Follow",
+      "description": "Theo dõi truyện",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "storyId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "storyId"]
+    },
+    "reading_history": {
+      "title": "Reading History",
+      "description": "Lịch sử đọc truyện",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "storyId": { "type": "string" },
+        "chapterId": { "type": "string" },
+        "lastReadAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "storyId", "chapterId"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "users", "description": "Người dùng" },
+    "categories": { "schema": "categories", "description": "Thể loại" },
+    "stories": { "schema": "stories", "description": "Truyện" },
+    "stories/{storyId}/chapters": { "schema": "chapters", "description": "Chương truyện" },
+    "comments": { "schema": "comments", "description": "Bình luận" },
+    "follows": { "schema": "follows", "description": "Theo dõi" },
+    "reading_history": { "schema": "reading_history", "description": "Lịch sử đọc" }
+  }
+}

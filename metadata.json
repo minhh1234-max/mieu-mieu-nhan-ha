@@ -1,0 +1,7 @@
+{
+  "name": "Miêu Miêu Nhàn Hạ",
+  "description": "Nền tảng đọc tiểu thuyết và truyện sáng tác trực tuyến hiện đại với đầy đủ tính năng theo dõi, lịch sử và bình luận.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
